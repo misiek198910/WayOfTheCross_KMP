@@ -45,7 +45,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.ump.ConsentInformation
@@ -84,7 +83,6 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private var mInterstitialAd: InterstitialAd? = null
-    private var appOpenAd: AppOpenAd? = null
     private var isShowingAd = false
     private lateinit var consentInformation: ConsentInformation
     private lateinit var mainViewModel: MainViewModel
@@ -153,13 +151,7 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
                     }
                     SubscriptionStatus.NON_PREMIUM -> {
                         requestConsentAndLoadAds {
-                            if (mainViewModel.isFirstRun) {
-                                loadAppOpenAd {
-                                    mainViewModel.finishLoading()
-                                }
-                            } else {
-                                mainViewModel.finishLoading()
-                            }
+                            mainViewModel.finishLoading()
                         }
                     }
                     SubscriptionStatus.CHECKING -> { }
@@ -337,53 +329,6 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
         } else {
             loadInterstitialAd()
         }
-    }
-
-    fun loadAppOpenAd(onAdClosed: () -> Unit) {
-        val request = AdRequest.Builder().build()
-
-        AppOpenAd.load(
-            this,
-            "ca-app-pub-8612826840770530/7892222797",
-            request,
-            object : AppOpenAd.AppOpenAdLoadCallback() {
-                override fun onAdLoaded(ad: AppOpenAd) {
-                    appOpenAd = ad
-                    showAppOpenAd(onAdClosed)
-                }
-
-                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                    appOpenAd = null
-                    onAdClosed()
-                }
-            }
-        )
-    }
-
-    private fun showAppOpenAd(onAdClosed: () -> Unit) {
-        if (isShowingAd || appOpenAd == null) {
-            onAdClosed()
-            return
-        }
-
-        appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-            override fun onAdDismissedFullScreenContent() {
-                appOpenAd = null
-                isShowingAd = false
-                onAdClosed()
-            }
-
-            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                appOpenAd = null
-                isShowingAd = false
-                onAdClosed()
-            }
-
-            override fun onAdShowedFullScreenContent() {
-                isShowingAd = true
-            }
-        }
-        appOpenAd?.show(this)
     }
 
     fun requestConsentAndLoadAds(onComplete: () -> Unit) {

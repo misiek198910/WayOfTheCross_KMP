@@ -10,12 +10,8 @@ class MainViewModel : ViewModel() {
     val isLoading: MutableState<Boolean> = _isLoading
     var isAppReadyForResumeAds = false
 
-    var isFirstRun = true
-        private set
-
     fun finishLoading() {
         _isLoading.value = false
-        isFirstRun = false
         isAppReadyForResumeAds = true
     }
 }
