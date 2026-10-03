@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -86,7 +85,6 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
     private var isShowingAd = false
     private lateinit var consentInformation: ConsentInformation
     private lateinit var mainViewModel: MainViewModel
-    private var lastAdShowTime: Long = 0
     private var isLoadingAd = false
 
     private val showPermissionDialog = mutableStateOf(false)
@@ -121,17 +119,6 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
         checkForUpdate()
 
         loadInterstitialAd()
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val subscriptionManager = SubscriptionManager.getInstance(this@MainActivity)
-                if (!subscriptionManager.isPremiumValue && mInterstitialAd != null) {
-                    showInterstitialAdWithCallback { finish() }
-                } else {
-                    finish()
-                }
-            }
-        })
 
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
@@ -189,20 +176,6 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
         }
     }
 
-    override fun onStart(owner: LifecycleOwner) {
-        val subscriptionManager = SubscriptionManager.getInstance(this)
-        val currentTime = System.currentTimeMillis()
-
-        if (::mainViewModel.isInitialized &&
-            mainViewModel.isAppReadyForResumeAds &&
-            !subscriptionManager.isPremiumValue &&
-            !isShowingAd &&
-            (currentTime - lastAdShowTime > 30000)) {
-
-            showInterstitialAd()
-        }
-    }
-
     override fun onResume(owner: LifecycleOwner) {
         checkPromotionRedirect()
 
@@ -256,29 +229,6 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
         }
     }
 
-    fun showInterstitialAdWithCallback(onAdClosed: () -> Unit) {
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    mInterstitialAd = null
-                    isShowingAd = false
-                    loadInterstitialAd()
-                    onAdClosed()
-                }
-                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    isShowingAd = false
-                    onAdClosed()
-                }
-                override fun onAdShowedFullScreenContent() {
-                    isShowingAd = true
-                }
-            }
-            mInterstitialAd?.show(this)
-        } else {
-            onAdClosed()
-        }
-    }
-
     fun loadInterstitialAd() {
         if (mInterstitialAd != null || isLoadingAd) return
 
@@ -305,7 +255,6 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity(), DefaultLifecycl
     fun showInterstitialAd() {
         if (mInterstitialAd != null && !isShowingAd) {
             isShowingAd = true
-            lastAdShowTime = System.currentTimeMillis()
 
             mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {

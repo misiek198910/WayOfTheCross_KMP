@@ -8,10 +8,8 @@ class MainViewModel : ViewModel() {
 
     private val _isLoading = mutableStateOf(true)
     val isLoading: MutableState<Boolean> = _isLoading
-    var isAppReadyForResumeAds = false
 
     fun finishLoading() {
         _isLoading.value = false
-        isAppReadyForResumeAds = true
     }
 }
