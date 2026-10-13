@@ -103,7 +103,7 @@ class IosPlatformServices(
         }
     }
 
-    override val supportsRewardedAdFree: Boolean = ads?.rewardedConfigured ?: false
+    override val supportsRewardedAdFree: Boolean = REWARDED_AD_FREE_ENABLED && (ads?.rewardedConfigured ?: false)
 
     private val rewardedState = MutableStateFlow(RewardedAdState.Unavailable)
     override val rewardedAd: StateFlow<RewardedAdState> = rewardedState
@@ -166,6 +166,9 @@ class IosPlatformServices(
     private companion object {
         const val KEY_REWARD_UNTIL = "rewarded_ad_free_until_millis"
         const val REWARD_MILLIS = 24 * 60 * 60 * 1000L
+
+        // Off until the app is live on the App Store: AdMob serves no real rewarded ads to an unverified app.
+        const val REWARDED_AD_FREE_ENABLED = false
     }
 }
 
