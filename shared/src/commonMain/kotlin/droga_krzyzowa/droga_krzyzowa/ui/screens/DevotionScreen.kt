@@ -83,8 +83,6 @@ import droga_krzyzowa.droga_krzyzowa.data.Devotion
 import droga_krzyzowa.droga_krzyzowa.data.loadDevotionText
 import droga_krzyzowa.droga_krzyzowa.data.romanNumeral
 import droga_krzyzowa.droga_krzyzowa.platform.LocalPlatformServices
-import droga_krzyzowa.droga_krzyzowa.platform.Screens
-import droga_krzyzowa.droga_krzyzowa.platform.logView
 import droga_krzyzowa.droga_krzyzowa.ui.components.GlassCard
 import droga_krzyzowa.droga_krzyzowa.ui.components.GradientButton
 import droga_krzyzowa.droga_krzyzowa.ui.components.TwoColumnMinWidth
@@ -129,7 +127,6 @@ fun DevotionScreen(devotion: Devotion, language: AppLanguage, onBack: () -> Unit
     // Reaching the last station or part finishes the devotion, so the next visit starts from the beginning.
     LaunchedEffect(pagerState.currentPage) {
         preferences.setLastPage(devotion, if (pagerState.currentPage == lastPage) 0 else pagerState.currentPage)
-        platform.logView(Screens.page(devotion, pagerState.currentPage))
     }
 
     fun goTo(page: Int) {

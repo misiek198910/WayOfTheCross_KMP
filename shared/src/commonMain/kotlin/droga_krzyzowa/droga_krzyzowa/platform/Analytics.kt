@@ -18,12 +18,6 @@ object Screens {
         Devotion.WayOfTheCross -> "droga_krzyzowa"
         Devotion.Lamentations -> "gorzkie_zale"
     }
-
-    /** One view per station or part, e.g. "DrogaKrzyzowa_stacja_7", "DrogaKrzyzowa_gorzkie_zale_czesc_2". */
-    fun page(devotion: Devotion, page: Int): String = PREFIX + when (devotion) {
-        Devotion.WayOfTheCross -> "stacja_${page + 1}"
-        Devotion.Lamentations -> "gorzkie_zale_czesc_${page + 1}"
-    }
 }
 
 /** Actions in the "Remove ads" card of the settings; the subscription has no screen of its own. */

@@ -1,3 +1,4 @@
+import AppTrackingTransparency
 import GoogleMobileAds
 import Shared
 import UIKit
@@ -42,6 +43,7 @@ final class AdMobAds: NSObject, IosAds {
     private var appOpenDelegate: AppOpenDelegate?
     private var rewardedAd: RewardedAd?
     private var rewardedDelegate: RewardedDelegate?
+    private let bannerDelegate = BannerDelegate()
     private var started = false
     private var adsAllowed = false
 
@@ -73,8 +75,10 @@ final class AdMobAds: NSObject, IosAds {
             if let error { print("Consent update: \(error.localizedDescription)") }
             ConsentForm.loadAndPresentIfRequired(from: Self.topViewController()) { formError in
                 if let formError { print("Consent form: \(formError.localizedDescription)") }
-                guard let self, consent.canRequestAds else { return finish.invoke() }
-                self.initializeAndShowAppOpen(finish)
+                Self.requestTrackingAuthorizationIfNeeded {
+                    guard let self, consent.canRequestAds else { return finish.invoke() }
+                    self.initializeAndShowAppOpen(finish)
+                }
             }
         }
     }
@@ -95,6 +99,7 @@ final class AdMobAds: NSObject, IosAds {
         let banner = BannerView(adSize: size)
         banner.adUnitID = ids.banner
         banner.rootViewController = Self.topViewController()
+        banner.delegate = bannerDelegate
         banner.load(Request())
         return banner
     }
@@ -143,6 +148,26 @@ final class AdMobAds: NSObject, IosAds {
                     ad.present(from: root)
                 }
             }
+        }
+    }
+
+    /// Apple's tracking prompt (IDFA), asked once after the UMP form; a no-op when already answered,
+    /// e.g. when an IDFA explainer message configured in AdMob has shown it already.
+    /// The prompt only appears while the app is active; asked earlier, iOS calls back at once and shows it later.
+    private static func requestTrackingAuthorizationIfNeeded(_ completion: @escaping () -> Void) {
+        guard ATTrackingManager.trackingAuthorizationStatus == .notDetermined else { return completion() }
+        guard UIApplication.shared.applicationState == .active else {
+            var observer: NSObjectProtocol?
+            observer = NotificationCenter.default.addObserver(
+                forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main
+            ) { _ in
+                observer.map(NotificationCenter.default.removeObserver)
+                requestTrackingAuthorizationIfNeeded(completion)
+            }
+            return
+        }
+        ATTrackingManager.requestTrackingAuthorization { _ in
+            DispatchQueue.main.async { completion() }
         }
     }
 
@@ -198,6 +223,16 @@ private final class AppOpenDelegate: NSObject, FullScreenContentDelegate {
 
     func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
         finish.invoke()
+    }
+}
+
+private final class BannerDelegate: NSObject, BannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
+        print("Banner ad loaded")
+    }
+
+    func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
+        print("Banner ad failed to load: \(error.localizedDescription)")
     }
 }
 

@@ -26,7 +26,7 @@
 	<key>DKAdRewardedUnitID</key>
 	<string>$(ADMOB_REWARDED_ID)</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier will be used to deliver personalized ads to you.</string>
+	<string>This identifier will be used to show you more relevant ads. The app works the same whatever you choose.</string>
 	<!-- Google (first) and the third-party buyers listed at developers.google.com/admob/ios/3p-skadnetworks (updated 2025-04-02). -->
 	<key>SKAdNetworkItems</key>
 	<array>
