@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Droga Krzyżowa</string>
+    <string name="notification_channel_news">Nowości</string>
+</resources>

@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">Droga Krzyżowa</string>
+    <string name="loading">Wczytywanie…</string>
+    <string name="back">Wstecz</string>
+    <string name="home_way_of_cross">Droga Krzyżowa</string>
+    <string name="home_way_of_cross_desc">Rozważania Męki Pańskiej</string>
+    <string name="home_lamentations">Gorzkie Żale</string>
+    <string name="home_lamentations_desc">Trzy części nabożeństwa</string>
+    <string name="home_news">Nowości</string>
+    <string name="home_settings">Ustawienia</string>
+    <string name="home_continue">Kontynuuj</string>
+    <string name="home_continue_station">Stacja %1$d z %2$d</string>
+    <string name="devotion_tap_to_read">Dotknij, aby przeczytać rozważanie</string>
+    <string name="devotion_tap_to_read_part">Dotknij, aby przeczytać tekst</string>
+    <string name="devotion_previous">Poprzednia</string>
+    <string name="devotion_next">Następna</string>
+    <string name="devotion_station_label">Stacja %1$s</string>
+    <string name="devotion_part_label">Część %1$s</string>
+    <string name="devotion_read">Czytaj</string>
+    <string name="text_size">Rozmiar tekstu</string>
+    <string name="news_title">Aktualności</string>
+    <string name="news_empty">Brak nowych wiadomości</string>
+    <string name="news_error">Nie udało się pobrać wiadomości. Sprawdź połączenie z internetem.</string>
+    <string name="news_retry">Spróbuj ponownie</string>
+    <string name="news_learn_more">Dowiedz się więcej</string>
+    <string name="settings_language">Język aplikacji</string>
+    <string name="lang_polish">Polski</string>
+    <string name="lang_english">English</string>
+    <string name="settings_more">Więcej</string>
+    <string name="settings_rate">Oceń aplikację</string>
+    <string name="settings_version">Wersja %1$s</string>
+    <string name="settings_ads">Reklamy</string>
+    <string name="settings_ad_privacy">Prywatność reklam</string>
+    <string name="update_ready_title">Aktualizacja gotowa</string>
+    <string name="update_ready_message">Pobrano nową wersję aplikacji. Uruchomić ponownie, aby ją zainstalować?</string>
+    <string name="update_restart">Uruchom ponownie</string>
+    <string name="update_later">Później</string>
+    <string name="notifications_title">Bądź na bieżąco</string>
+    <string name="notifications_text">Włącz powiadomienia, aby otrzymywać informacje o nowych funkcjach oraz dostępnych aktualizacjach.</string>
+    <string name="notifications_allow">Włącz</string>
+    <string name="notifications_later">Później</string>
+    <string name="ad_free_title">Usuń reklamy</string>
+    <string name="ad_free_text">Subskrypcja wyłącza wszystkie reklamy w aplikacji i wspiera jej dalszy rozwój. Możesz ją anulować w każdej chwili.</string>
+    <string name="ad_free_subscribe">Subskrybuj</string>
+    <string name="ad_free_restore">Przywróć zakupy</string>
+    <string name="ad_free_unavailable">Subskrypcja jest chwilowo niedostępna</string>
+    <string name="ad_free_active_title">Bez reklam</string>
+    <string name="ad_free_active_text">Subskrypcja aktywna – dziękuję za wsparcie!</string>
+    <string name="ad_free_manage">Zarządzaj subskrypcją</string>
+    <string name="ad_free_terms">Regulamin (EULA)</string>
+    <string name="ad_free_privacy">Polityka prywatności</string>
+    <string name="ad_free_reward_text">Obejrzyj krótką reklamę, a przez 24 godziny aplikacja będzie bez reklam.</string>
+    <string name="ad_free_reward_watch">Obejrzyj reklamę – 24 h bez reklam</string>
+    <string name="ad_free_reward_loading">Ładowanie reklamy…</string>
+    <string name="ad_free_reward_unavailable">Brak reklamy do wyświetlenia. Spróbuj ponownie później.</string>
+    <string name="ad_free_reward_active">Bez reklam do %1$s</string>
+    <string name="ad_free_plan_monthly">Miesięcznie</string>
+    <string name="ad_free_plan_yearly">Rocznie</string>
+    <string name="ad_free_plan_yearly_trial">Rocznie (%1$s za darmo)</string>
+    <string name="ad_free_plan_button">%1$s – %2$s</string>
+    <plurals name="ad_free_days">
+        <item quantity="one">%1$d dzień</item>
+        <item quantity="few">%1$d dni</item>
+        <item quantity="many">%1$d dni</item>
+        <item quantity="other">%1$d dnia</item>
+    </plurals>
+    <plurals name="ad_free_months">
+        <item quantity="one">%1$d miesiąc</item>
+        <item quantity="few">%1$d miesiące</item>
+        <item quantity="many">%1$d miesięcy</item>
+        <item quantity="other">%1$d miesiąca</item>
+    </plurals>
+    <string-array name="station_titles">
+        <item>Pan Jezus na śmierć skazany</item>
+        <item>Pan Jezus bierze krzyż na ramiona</item>
+        <item>Pierwszy upadek pod krzyżem</item>
+        <item>Pan Jezus spotyka Matkę swoją</item>
+        <item>Szymon z Cyreny pomaga nieść krzyż Jezusowi</item>
+        <item>Weronika ociera twarz Jezusowi</item>
+        <item>Drugi upadek pod krzyżem</item>
+        <item>Pan Jezus pociesza płaczące niewiasty</item>
+        <item>Trzeci upadek pod krzyżem</item>
+        <item>Pan Jezus z szat obnażony</item>
+        <item>Pan Jezus do krzyża przybity</item>
+        <item>Pan Jezus umiera na krzyżu</item>
+        <item>Pan Jezus z krzyża zdjęty i złożony w ramiona Matki</item>
+        <item>Pan Jezus do grobu złożony</item>
+    </string-array>
+    <string-array name="lamentations_titles">
+        <item>Gorzkie Żale – Część Pierwsza</item>
+        <item>Gorzkie Żale – Część Druga</item>
+        <item>Gorzkie Żale – Część Trzecia</item>
+    </string-array>
+</resources>

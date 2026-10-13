@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Way of the Cross</string>
+    <string name="notification_channel_news">News</string>
+</resources>

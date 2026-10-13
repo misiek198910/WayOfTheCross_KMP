@@ -1,0 +1,10 @@
+<resources>
+    <!-- Dark window background matching the Compose gradient, so there is no white flash on start. -->
+    <style name="Theme.WayOfTheCross" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+    <color name="window_background">#FF1A0B2E</color>
+    <color name="gold">#FFD4AF37</color>
+</resources>

@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">Way of the Cross</string>
+    <string name="loading">Loading…</string>
+    <string name="back">Back</string>
+    <string name="home_way_of_cross">Way of the Cross</string>
+    <string name="home_way_of_cross_desc">Meditations on the Lord's Passion</string>
+    <string name="home_lamentations">Bitter Lamentations</string>
+    <string name="home_lamentations_desc">Three parts of the devotion</string>
+    <string name="home_news">News</string>
+    <string name="home_settings">Settings</string>
+    <string name="home_continue">Continue</string>
+    <string name="home_continue_station">Station %1$d of %2$d</string>
+    <string name="devotion_tap_to_read">Tap to read the meditation</string>
+    <string name="devotion_tap_to_read_part">Tap to read the text</string>
+    <string name="devotion_previous">Previous</string>
+    <string name="devotion_next">Next</string>
+    <string name="devotion_station_label">Station %1$s</string>
+    <string name="devotion_part_label">Part %1$s</string>
+    <string name="devotion_read">Read</string>
+    <string name="text_size">Text size</string>
+    <string name="news_title">Latest News</string>
+    <string name="news_empty">No new messages</string>
+    <string name="news_error">Could not load the news. Check your internet connection.</string>
+    <string name="news_retry">Try again</string>
+    <string name="news_learn_more">Learn more</string>
+    <string name="settings_language">App language</string>
+    <string name="lang_polish">Polski</string>
+    <string name="lang_english">English</string>
+    <string name="settings_more">More</string>
+    <string name="settings_rate">Rate the app</string>
+    <string name="settings_version">Version %1$s</string>
+    <string name="settings_ads">Ads</string>
+    <string name="settings_ad_privacy">Ad privacy</string>
+    <string name="update_ready_title">Update ready</string>
+    <string name="update_ready_message">A new version of the app has been downloaded. Restart now to install it?</string>
+    <string name="update_restart">Restart</string>
+    <string name="update_later">Later</string>
+    <string name="notifications_title">Stay up to date</string>
+    <string name="notifications_text">Turn on notifications to hear about new features and available updates.</string>
+    <string name="notifications_allow">Turn on</string>
+    <string name="notifications_later">Later</string>
+    <string name="ad_free_title">Remove ads</string>
+    <string name="ad_free_text">The subscription turns off all ads in the app and supports its further development. You can cancel it at any time.</string>
+    <string name="ad_free_subscribe">Subscribe</string>
+    <string name="ad_free_restore">Restore purchases</string>
+    <string name="ad_free_unavailable">The subscription is temporarily unavailable</string>
+    <string name="ad_free_active_title">Ad-free</string>
+    <string name="ad_free_active_text">Subscription active – thank you for your support!</string>
+    <string name="ad_free_manage">Manage subscription</string>
+    <string name="ad_free_terms">Terms of Use (EULA)</string>
+    <string name="ad_free_privacy">Privacy Policy</string>
+    <string name="ad_free_reward_text">Watch a short ad and use the app without ads for 24 hours.</string>
+    <string name="ad_free_reward_watch">Watch an ad – 24 h without ads</string>
+    <string name="ad_free_reward_loading">Loading ad…</string>
+    <string name="ad_free_reward_unavailable">No ad available right now. Please try again later.</string>
+    <string name="ad_free_reward_active">No ads until %1$s</string>
+    <string name="ad_free_plan_monthly">Monthly</string>
+    <string name="ad_free_plan_yearly">Yearly</string>
+    <string name="ad_free_plan_yearly_trial">Yearly (%1$s free)</string>
+    <string name="ad_free_plan_button">%1$s – %2$s</string>
+    <plurals name="ad_free_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+    <plurals name="ad_free_months">
+        <item quantity="one">%1$d month</item>
+        <item quantity="other">%1$d months</item>
+    </plurals>
+    <string-array name="station_titles">
+        <item>Jesus is condemned to death</item>
+        <item>Jesus carries His cross</item>
+        <item>Jesus falls the first time</item>
+        <item>Jesus meets His Mother</item>
+        <item>Simon of Cyrene helps Jesus carry the cross</item>
+        <item>Veronica wipes the face of Jesus</item>
+        <item>Jesus falls the second time</item>
+        <item>Jesus meets the women of Jerusalem</item>
+        <item>Jesus falls the third time</item>
+        <item>Jesus is stripped of His garments</item>
+        <item>Jesus is nailed to the cross</item>
+        <item>Jesus dies on the cross</item>
+        <item>Jesus is taken down from the cross</item>
+        <item>Jesus is laid in the tomb</item>
+    </string-array>
+    <string-array name="lamentations_titles">
+        <item>Bitter Lamentations – Part One</item>
+        <item>Bitter Lamentations – Part Two</item>
+        <item>Bitter Lamentations – Part Three</item>
+    </string-array>
+</resources>

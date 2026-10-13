@@ -1,0 +1,15 @@
+TEAM_ID=S62A8S8QGY
+
+PRODUCT_NAME=WayOfTheCross_KMP
+PRODUCT_BUNDLE_IDENTIFIER=mivs.drogakrzyzowa
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
+
+// AdMob: Google's sample app id and no release units by default, so the project builds from a fresh clone.
+// Real ids live in the git-ignored Secrets.xcconfig (see README). Debug builds always use Google's test units.
+ADMOB_APP_ID=ca-app-pub-3940256099942544~1458002511
+ADMOB_BANNER_ID=
+ADMOB_APP_OPEN_ID=
+ADMOB_REWARDED_ID=
+#include? "Secrets.xcconfig"
