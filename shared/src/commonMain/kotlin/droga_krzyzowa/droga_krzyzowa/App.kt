@@ -40,6 +40,7 @@ import droga_krzyzowa.droga_krzyzowa.platform.PlatformServices
 import droga_krzyzowa.droga_krzyzowa.platform.Screens
 import droga_krzyzowa.droga_krzyzowa.platform.logView
 import droga_krzyzowa.droga_krzyzowa.ui.components.AppBackground
+import droga_krzyzowa.droga_krzyzowa.ui.components.LocalOpenAdFreeSettings
 import droga_krzyzowa.droga_krzyzowa.ui.screens.DevotionScreen
 import droga_krzyzowa.droga_krzyzowa.ui.screens.HomeScreen
 import droga_krzyzowa.droga_krzyzowa.ui.screens.NewsScreen
@@ -189,48 +190,57 @@ private fun AppNavHost(language: AppLanguage, onLanguageChange: (AppLanguage) ->
         }
     }
 
-    NavHost(
-        navController = navController,
-        startDestination = startDestination,
-        enterTransition = { slideIntoContainer(SlideDirection.Start, tween(350)) + fadeIn(tween(350)) },
-        exitTransition = { fadeOut(tween(250)) },
-        popEnterTransition = { fadeIn(tween(250)) },
-        popExitTransition = { slideOutOfContainer(SlideDirection.End, tween(350)) + fadeOut(tween(350)) },
-    ) {
-        composable<SplashRoute>(
-            exitTransition = { fadeOut(tween(500)) },
+    // From the news (opened in the settings) go back to those settings instead of stacking a second copy.
+    val openAdFreeSettings: () -> Unit = remember(navController) {
+        { if (!navController.popBackStack<SettingsRoute>(inclusive = false)) navController.navigate(SettingsRoute) }
+    }
+    CompositionLocalProvider(LocalOpenAdFreeSettings provides openAdFreeSettings) {
+        NavHost(
+            navController = navController,
+            startDestination = startDestination,
+            enterTransition = { slideIntoContainer(SlideDirection.Start, tween(350)) + fadeIn(tween(350)) },
+            exitTransition = { fadeOut(tween(250)) },
+            popEnterTransition = { fadeIn(tween(250)) },
+            popExitTransition = { slideOutOfContainer(SlideDirection.End, tween(350)) + fadeOut(tween(350)) },
         ) {
-            SplashScreen(onFinished = {
-                AppSession.startupDone = true
-                navController.navigate(HomeRoute) { popUpTo<SplashRoute> { inclusive = true } }
-            })
-        }
-        composable<HomeRoute>(
-            enterTransition = { fadeIn(tween(500)) },
-        ) {
-            HomeScreen(
-                onDevotion = { navController.navigate(DevotionRoute(it)) },
-                onSettings = { navController.navigate(SettingsRoute) },
-            )
-            NotificationPrompt()
-        }
-        composable<DevotionRoute> { entry ->
-            DevotionScreen(
-                devotion = entry.toRoute<DevotionRoute>().devotion,
-                language = language,
-                onBack = navController::popBackStackSafely,
-            )
-        }
-        composable<NewsRoute> {
-            NewsScreen(onBack = navController::popBackStackSafely)
-        }
-        composable<SettingsRoute> {
-            SettingsScreen(
-                language = language,
-                onLanguageChange = onLanguageChange,
-                onBack = navController::popBackStackSafely,
-                onNews = { navController.navigate(NewsRoute) },
-            )
+            composable<SplashRoute>(
+                exitTransition = { fadeOut(tween(500)) },
+            ) {
+                SplashScreen(onFinished = {
+                    AppSession.startupDone = true
+                    navController.navigate(HomeRoute) { popUpTo<SplashRoute> { inclusive = true } }
+                })
+            }
+            composable<HomeRoute>(
+                enterTransition = { fadeIn(tween(500)) },
+            ) {
+                HomeScreen(
+                    onDevotion = { navController.navigate(DevotionRoute(it)) },
+                    onSettings = { navController.navigate(SettingsRoute) },
+                )
+                NotificationPrompt()
+            }
+            composable<DevotionRoute> { entry ->
+                DevotionScreen(
+                    devotion = entry.toRoute<DevotionRoute>().devotion,
+                    language = language,
+                    onBack = navController::popBackStackSafely,
+                )
+            }
+            composable<NewsRoute> {
+                NewsScreen(onBack = navController::popBackStackSafely)
+            }
+            composable<SettingsRoute> {
+                // Already in the settings: no "Turn off ads" link over the banner here.
+                CompositionLocalProvider(LocalOpenAdFreeSettings provides null) {
+                    SettingsScreen(
+                        language = language,
+                        onLanguageChange = onLanguageChange,
+                        onBack = navController::popBackStackSafely,
+                        onNews = { navController.navigate(NewsRoute) },
+                    )
+                }
+            }
         }
     }
 }

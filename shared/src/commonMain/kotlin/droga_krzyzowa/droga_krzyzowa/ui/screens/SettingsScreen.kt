@@ -1,7 +1,16 @@
 package droga_krzyzowa.droga_krzyzowa.ui.screens
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,7 +42,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -54,6 +67,7 @@ import droga_krzyzowa.droga_krzyzowa.ui.components.readableWidth
 import droga_krzyzowa.droga_krzyzowa.ui.components.staggeredAppear
 import droga_krzyzowa.droga_krzyzowa.ui.theme.AppColors
 import droga_krzyzowa.droga_krzyzowa.ui.theme.AppIcons
+import kotlin.math.sqrt
 import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
@@ -288,27 +302,21 @@ private fun RewardedAdFreeRow(rewardUntilMillis: Long?) {
                 Text(stringResource(Res.string.ad_free_reward_active, time), style = MaterialTheme.typography.bodyMedium, color = AppColors.Gold)
             }
         }
-        adState != RewardedAdState.Unavailable -> OutlinedButton(
+        adState != RewardedAdState.Unavailable -> RewardedButton(
+            text = stringResource(if (adState == RewardedAdState.Ready) Res.string.ad_free_reward_watch else Res.string.ad_free_reward_loading),
+            enabled = adState == RewardedAdState.Ready,
             onClick = {
                 platform.logEvent(Events.REWARDED_AD)
                 platform.showRewardedAd()
             },
-            enabled = adState == RewardedAdState.Ready,
-            modifier = Modifier.fillMaxWidth().height(48.dp),
-        ) {
-            Text(
-                stringResource(if (adState == RewardedAdState.Ready) Res.string.ad_free_reward_watch else Res.string.ad_free_reward_loading),
-                color = AppColors.GoldLight,
-            )
-        }
+        )
         // No fill or ads not initialised yet: keep a visible action instead of an empty card.
         else -> Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            OutlinedButton(
+            RewardedButton(
+                text = stringResource(Res.string.ad_free_reward_watch),
+                enabled = true,
                 onClick = { retried = true; platform.loadRewardedAd() },
-                modifier = Modifier.fillMaxWidth().height(48.dp),
-            ) {
-                Text(stringResource(Res.string.ad_free_reward_watch), color = AppColors.GoldLight)
-            }
+            )
             if (retried) {
                 Text(
                     stringResource(Res.string.ad_free_reward_unavailable),
@@ -319,6 +327,69 @@ private fun RewardedAdFreeRow(rewardUntilMillis: Long?) {
                 )
             }
         }
+    }
+}
+
+/** Gold-framed button with a pulsing play icon, so the free way to drop the ads catches the eye. */
+@Composable
+private fun RewardedButton(text: String, enabled: Boolean, onClick: () -> Unit) {
+    OutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        border = BorderStroke(1.5.dp, if (enabled) AppColors.Gold else AppColors.Gold.copy(alpha = 0.3f)),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().height(52.dp),
+    ) {
+        AttentionPlayIcon(animate = enabled)
+        Spacer(Modifier.width(14.dp))
+        Text(text, color = AppColors.GoldLight, style = MaterialTheme.typography.titleSmall)
+    }
+}
+
+/**
+ * The play icon "breathes", sways a little and sends out two golden waves.
+ * Animated values are read in graphicsLayer/drawBehind, so the animation only redraws the icon.
+ */
+@Composable
+private fun AttentionPlayIcon(animate: Boolean) {
+    if (!animate) {
+        Icon(AppIcons.PlayCircle, contentDescription = null, tint = AppColors.Gold.copy(alpha = 0.5f), modifier = Modifier.size(22.dp))
+        return
+    }
+    val transition = rememberInfiniteTransition()
+    val wave by transition.animateFloat(0f, 1f, infiniteRepeatable(tween(2_000, easing = LinearEasing)))
+    val breath by transition.animateFloat(1f, 1.12f, infiniteRepeatable(tween(700, easing = FastOutSlowInEasing), RepeatMode.Reverse))
+    val tilt by transition.animateFloat(-8f, 8f, infiniteRepeatable(tween(1_400, easing = FastOutSlowInEasing), RepeatMode.Reverse))
+    Box(
+        Modifier.size(22.dp).drawBehind {
+            val base = size.minDimension / 2f
+            val glow = base * (1.4f + 2.5f * (breath - 1f))
+            drawCircle(
+                brush = Brush.radialGradient(listOf(AppColors.Gold.copy(alpha = 0.5f), AppColors.Gold.copy(alpha = 0f)), center = center, radius = glow),
+                radius = glow,
+            )
+            // Two waves half a cycle apart: a calm, continuous pulse that fades out slowly.
+            for (offset in listOf(0f, 0.5f)) {
+                val p = (wave + offset) % 1f
+                drawCircle(
+                    color = AppColors.Gold.copy(alpha = sqrt(1f - p)),
+                    radius = base * (1f + 0.75f * p),
+                    style = Stroke(width = (2.5f - 1.5f * p).dp.toPx()),
+                )
+            }
+        },
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            AppIcons.PlayCircle,
+            contentDescription = null,
+            tint = AppColors.GoldBright,
+            modifier = Modifier.size(22.dp).graphicsLayer {
+                scaleX = breath
+                scaleY = breath
+                rotationZ = tilt
+            },
+        )
     }
 }
 

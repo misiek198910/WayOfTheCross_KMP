@@ -39,6 +39,7 @@
     <string name="notifications_text">Turn on notifications to hear about new features and available updates.</string>
     <string name="notifications_allow">Turn on</string>
     <string name="notifications_later">Later</string>
+    <string name="ad_free_banner_link">Turn off ads</string>
     <string name="ad_free_title">Remove ads</string>
     <string name="ad_free_text">The subscription turns off all ads in the app and supports its further development. You can cancel it at any time.</string>
     <string name="ad_free_subscribe">Subscribe</string>

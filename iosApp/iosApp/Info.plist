@@ -7,6 +7,9 @@
 	<!-- Screens are reported manually with readable names; automatic reporting would only show the Compose view controller. -->
 	<key>FirebaseAutomaticScreenReportingEnabled</key>
 	<false/>
+	<!-- Only HTTPS through the system and Google SDKs, so no export compliance documents are needed. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>CFBundleDisplayName</key>
 	<string>Droga Krzyżowa</string>
 	<key>CFBundleLocalizations</key>

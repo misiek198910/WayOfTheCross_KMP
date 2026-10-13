@@ -57,8 +57,9 @@ interface PlatformServices {
 
     fun prepareAppStart(onReady: () -> Unit)
 
+    /** The banner, with [header] drawn just above it only while a banner is actually shown. */
     @Composable
-    fun AdBanner(modifier: Modifier)
+    fun AdBanner(modifier: Modifier, header: @Composable () -> Unit)
 }
 
 /** [rewardUntilMillis] is set while a watched rewarded ad keeps the app ad free (24 h). */

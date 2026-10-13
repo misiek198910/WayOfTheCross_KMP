@@ -50,10 +50,10 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -83,6 +83,7 @@ import droga_krzyzowa.droga_krzyzowa.data.Devotion
 import droga_krzyzowa.droga_krzyzowa.data.loadDevotionText
 import droga_krzyzowa.droga_krzyzowa.data.romanNumeral
 import droga_krzyzowa.droga_krzyzowa.platform.LocalPlatformServices
+import droga_krzyzowa.droga_krzyzowa.ui.components.AppAdBanner
 import droga_krzyzowa.droga_krzyzowa.ui.components.GlassCard
 import droga_krzyzowa.droga_krzyzowa.ui.components.GradientButton
 import droga_krzyzowa.droga_krzyzowa.ui.components.TwoColumnMinWidth
@@ -139,7 +140,7 @@ fun DevotionScreen(devotion: Devotion, language: AppLanguage, onBack: () -> Unit
         Scaffold(
             containerColor = Color.Transparent,
             contentWindowInsets = WindowInsets(0),
-            bottomBar = { if (!compactHeight) platform.AdBanner(Modifier.fillMaxWidth().navigationBarsPadding()) },
+            bottomBar = { if (!compactHeight) AppAdBanner(Modifier.fillMaxWidth().navigationBarsPadding()) },
         ) { innerPadding ->
             val bottom = innerPadding.calculateBottomPadding()
             BoxWithConstraints(

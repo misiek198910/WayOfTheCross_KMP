@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -161,8 +163,13 @@ class AndroidPlatformServices(private val activity: ComponentActivity) : Platfor
     }
 
     @Composable
-    override fun AdBanner(modifier: Modifier) {
+    override fun AdBanner(modifier: Modifier, header: @Composable () -> Unit) {
         val adFreeState by adFree.collectAsState()
-        if (!adFreeState.adsHidden) BannerAd(modifier)
+        if (!adFreeState.adsHidden && AdsManager.adsReady) {
+            Column(modifier) {
+                header()
+                BannerAd(Modifier.fillMaxWidth())
+            }
+        }
     }
 }

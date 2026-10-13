@@ -1,5 +1,7 @@
 package droga_krzyzowa.droga_krzyzowa.platform
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -158,9 +160,14 @@ class IosPlatformServices(
     }
 
     @Composable
-    override fun AdBanner(modifier: Modifier) {
+    override fun AdBanner(modifier: Modifier, header: @Composable () -> Unit) {
         val adFreeNow by adFree.collectAsState()
-        if (ads != null && adsReady && !adFreeNow.adsHidden) IosBanner(ads, modifier)
+        if (ads != null && adsReady && !adFreeNow.adsHidden) {
+            Column(modifier) {
+                header()
+                IosBanner(ads, Modifier.fillMaxWidth())
+            }
+        }
     }
 
     private companion object {

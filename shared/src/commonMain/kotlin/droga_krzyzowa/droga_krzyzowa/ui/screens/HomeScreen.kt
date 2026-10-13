@@ -42,6 +42,7 @@ import droga_krzyzowa.droga_krzyzowa.LocalNewsFeed
 import droga_krzyzowa.droga_krzyzowa.LocalPreferences
 import droga_krzyzowa.droga_krzyzowa.data.Devotion
 import droga_krzyzowa.droga_krzyzowa.platform.LocalPlatformServices
+import droga_krzyzowa.droga_krzyzowa.ui.components.AppAdBanner
 import droga_krzyzowa.droga_krzyzowa.ui.components.GlassCard
 import droga_krzyzowa.droga_krzyzowa.ui.components.MaxContentWidth
 import droga_krzyzowa.droga_krzyzowa.ui.components.TwoColumnMinWidth
@@ -81,7 +82,7 @@ fun HomeScreen(
 
     Scaffold(
         containerColor = Color.Transparent,
-        bottomBar = { platform.AdBanner(Modifier.fillMaxWidth().navigationBarsPadding()) },
+        bottomBar = { AppAdBanner(Modifier.fillMaxWidth().navigationBarsPadding()) },
     ) { innerPadding ->
         BoxWithConstraints(Modifier.fillMaxSize().padding(innerPadding)) {
             val twoColumns = maxWidth >= TwoColumnMinWidth

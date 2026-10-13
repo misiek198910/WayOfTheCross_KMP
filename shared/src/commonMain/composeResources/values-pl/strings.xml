@@ -39,6 +39,7 @@
     <string name="notifications_text">Włącz powiadomienia, aby otrzymywać informacje o nowych funkcjach oraz dostępnych aktualizacjach.</string>
     <string name="notifications_allow">Włącz</string>
     <string name="notifications_later">Później</string>
+    <string name="ad_free_banner_link">Wyłącz reklamy</string>
     <string name="ad_free_title">Usuń reklamy</string>
     <string name="ad_free_text">Subskrypcja wyłącza wszystkie reklamy w aplikacji i wspiera jej dalszy rozwój. Możesz ją anulować w każdej chwili.</string>
     <string name="ad_free_subscribe">Subskrybuj</string>
